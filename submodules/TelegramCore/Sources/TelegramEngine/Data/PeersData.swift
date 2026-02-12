@@ -2282,19 +2282,8 @@ public extension TelegramEngine.EngineData.Item {
             }
 
             func extract(view: PostboxView) -> Result {
-                guard let view = view as? BasicPeerView else {
-                    preconditionFailure()
-                }
-                guard let peer = view.peer else {
-                    return false
-                }
-                if let group = peer as? TelegramGroup {
-                    return group.flags.contains(.copyProtectionEnabled)
-                } else if let channel = peer as? TelegramChannel {
-                    return channel.flags.contains(.copyProtectionEnabled)
-                } else {
-                    return false
-                }
+                // Always allow downloading and saving media from protected channels/groups
+                return false
             }
         }
         
